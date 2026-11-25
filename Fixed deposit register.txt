@@ -1,0 +1,121 @@
+#include <stdio.h>
+
+#define MAX 50
+
+int main()
+{
+    int sno[MAX], years[MAX];
+    char name[MAX][50];
+    float principal[MAX], rate[MAX], si[MAX], maturity[MAX];
+
+    int count = 0, choice, search, i;
+
+    while (1)
+    {
+        printf("\n====================================\n");
+        printf("       FIXED DEPOSIT REGISTER\n");
+        printf("====================================\n");
+        printf("1. Open Fixed Deposit\n");
+        printf("2. View All Fixed Deposits\n");
+        printf("3. Search FD by S.No.\n");
+        printf("4. Exit\n");
+        printf("====================================\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+            case 1:
+                if (count == MAX)
+                {
+                    printf("Record limit reached!\n");
+                }
+                else
+                {
+                    sno[count] = count + 1;
+
+                    printf("Enter depositor name: ");
+                    scanf(" %49[^\n]", name[count]);
+
+                    printf("Enter principal amount: ");
+                    scanf("%f", &principal[count]);
+
+                    printf("Enter annual interest rate: ");
+                    scanf("%f", &rate[count]);
+
+                    printf("Enter duration in years: ");
+                    scanf("%d", &years[count]);
+
+                    si[count] = principal[count] *
+                                rate[count] * years[count] / 100;
+
+                    maturity[count] = principal[count] + si[count];
+
+                    printf("\nFD successfully registered!\n");
+                    printf("S.No.: %d\n", sno[count]);
+                    printf("Simple Interest: %.2f\n", si[count]);
+                    printf("Maturity Amount: %.2f\n",
+                           maturity[count]);
+
+                    count++;
+                }
+                break;
+
+            case 2:
+                if (count == 0)
+                {
+                    printf("No FD records available.\n");
+                }
+                else
+                {
+                    printf("\n");
+                    printf("--------------------------------------------------------------\n");
+                    printf("S.No. Name         Principal   Rate  Years    SI    Maturity\n");
+                    printf("--------------------------------------------------------------\n");
+
+                    for (i = 0; i < count; i++)
+                    {
+                        printf("%-5d %-12s %-10.2f %-5.2f %-5d %-7.2f %.2f\n",
+                               sno[i], name[i], principal[i],
+                               rate[i], years[i], si[i], maturity[i]);
+                    }
+
+                    printf("--------------------------------------------------------------\n");
+                }
+                break;
+
+            case 3:
+                printf("Enter FD S.No. to search: ");
+                scanf("%d", &search);
+
+                if (search >= 1 && search <= count)
+                {
+                    i = search - 1;
+
+                    printf("\nFD Record Found!\n");
+                    printf("S.No.: %d\n", sno[i]);
+                    printf("Depositor Name: %s\n", name[i]);
+                    printf("Principal Amount: %.2f\n", principal[i]);
+                    printf("Interest Rate: %.2f%%\n", rate[i]);
+                    printf("Duration: %d years\n", years[i]);
+                    printf("Simple Interest: %.2f\n", si[i]);
+                    printf("Maturity Amount: %.2f\n", maturity[i]);
+                }
+                else
+                {
+                    printf("No FD record found with S.No. %d.\n",
+                           search);
+                }
+                break;
+
+            case 4:
+                printf("Exiting Fixed Deposit Register.\n");
+                return 0;
+
+            default:
+                printf("Invalid choice! Try again.\n");
+        }
+    }
+
+    return 0;
+}
